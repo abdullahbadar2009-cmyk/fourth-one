@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'poppins';
+            background: #E8EAEF;
+            color: #1E1E2E;
+        }
+
+        .parent {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.267);
+        }
+
+        label {
+            display: flex;
+            font-size: small;
+            margin-bottom: -4px;
+        }
+
+        input {
+            padding: 7px;
+            border-radius: 12px;
+            font-family: 'poppins';
+            font-weight: bolder;
+            outline: none;
+            border: 2px solid bisque;
+            transition: 0.3s ease;
+            margin: 4px;
+        }
+
+        input:focus {
+            border: 2px solid cornflowerblue;
+        }
+
+        .btn {
+            margin-top: 6px;
+            width: 70%;
+            padding: 6px;
+            border-radius: 15px;
+            font-family: 'poppins';
+            font-weight: bolder;
+            border: none;
+            background: #A78BFA;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.308);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            background-color: lightskyblue;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+
+        }
+
+        li {
+            border-radius: 12px;
+            font-family: 'poppins';
+            padding: 10px;
+            text-align: center;
+
+            box-shadow: 0px 6px 30px #a4a4aa36;
+            list-style: none;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <h3>Wallet tracker</h3>
+        <div class="lab">
+            <label for="Cash u have">Cash u have</label>
+            <div><input id="cash" type="number" placeholder="Cash u have"></div>
+            <label for="Item">Item</label>
+            <div><input id="item" type="text" placeholder="Enter item name"></div>
+            <label for="amount">Amount</label>
+            <div><input id="amount" type="number" placeholder="Enter amount"></div>
+            <button class="btn" id="add">Add</button>
+        </div>
+    </div>
+    <ul class="list" id="output"></ul>
+</body>
+<script>
+    let balance = 0
+    let cash = document.getElementById("cash")
+    let item = document.getElementById("item")
+    let amount = document.getElementById("amount")
+    let add = document.getElementById("add")
+    let output = document.getElementById("output")
+
+    
+    add.addEventListener("click", () => {
+        const cas = Number(cash.value.trim())
+        const amoun = Number(amount.value.trim())
+        const ite = item.value.trim()
+        if (cas <= 0 || ite === "" || amoun <= 0 || isNaN(cas) || isNaN(amoun)) {
+            alert("PLZ enter desired feilds")
+            return
+        }
+
+        let remaining = cas - amoun
+        cash.value = remaining
+        if (amoun > cas) {
+            alert("Wallet is low on money")
+            return
+        }
+        balance -= amoun
+
+        let li = document.createElement("li");
+        li.innerHTML = `${ite} - ₹${amoun} 
+        <br><small>Remaining: ₹${remaining}</small>`;
+
+        output.appendChild(li);
+        // Clear fields except cash
+        item.value = "";
+        amount.value = "";
+
+    })
+
+
+</script>
+
+</html>
